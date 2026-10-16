@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import StatCard from "./components/StatCard";
+import StatusBadge from "./components/StatusBadge";
 
 const initialQuestions = [
   { id: 1, title: "Two Sum", category: "DSA", difficulty: "Easy", status: "Completed", date: "12 Oct 2026" },
@@ -71,39 +73,43 @@ const navItems = [
 <Sidebar close={() => setMobileNav(false)} />
 
 
-function StatCard({ title, value, note, icon: Icon, color }) {
-  return (
-    <div className="rounded-2xl border border-[#E5EAEA] bg-white p-5">
-      <div className="flex items-center gap-4">
-        <div className={`grid size-12 shrink-0 place-items-center rounded-xl ${color}`}>
-          <Icon size={23} />
-        </div>
-        <div className="min-w-0">
-          <p className="text-sm text-[#64748B]">{title}</p>
-          <p className="mt-1 text-2xl font-bold">{value}</p>
-          {note && <p className="mt-1 text-xs text-[#64748B]">{note}</p>}
-        </div>
-      </div>
-    </div>
-  );
-}
+// function StatCard({ title, value, note, icon: Icon, color }) {
+//   return (
+//     <div className="rounded-2xl border border-[#E5EAEA] bg-white p-5">
+//       <div className="flex items-center gap-4">
+//         <div className={`grid size-12 shrink-0 place-items-center rounded-xl ${color}`}>
+//           <Icon size={23} />
+//         </div>
+//         <div className="min-w-0">
+//           <p className="text-sm text-[#64748B]">{title}</p>
+//           <p className="mt-1 text-2xl font-bold">{value}</p>
+//           {note && <p className="mt-1 text-xs text-[#64748B]">{note}</p>}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
-function StatusBadge({ value }) {
-  const styles = {
-    Completed: "bg-[#DDF5E5] text-[#267A54]",
-    "In Progress": "bg-[#FFF0C2] text-[#966400]",
-    Pending: "bg-[#E1EFFB] text-[#315E91]",
-    Easy: "bg-[#DDF5E5] text-[#267A54]",
-    Medium: "bg-[#FFF0C2] text-[#966400]",
-    Hard: "bg-[#E1EFFB] text-[#315E91]",
-  };
 
-  return (
-    <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-medium ${styles[value] || "bg-gray-100 text-gray-600"}`}>
-      {value}
-    </span>
-  );
-}
+
+
+
+// function StatusBadge({ value }) {
+//   const styles = {
+//     Completed: "bg-[#DDF5E5] text-[#267A54]",
+//     "In Progress": "bg-[#FFF0C2] text-[#966400]",
+//     Pending: "bg-[#E1EFFB] text-[#315E91]",
+//     Easy: "bg-[#DDF5E5] text-[#267A54]",
+//     Medium: "bg-[#FFF0C2] text-[#966400]",
+//     Hard: "bg-[#E1EFFB] text-[#315E91]",
+//   };
+
+//   return (
+//     <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-medium ${styles[value] || "bg-gray-100 text-gray-600"}`}>
+//       {value}
+//     </span>
+//   );
+// }
 
 
 function QuestionTable({
