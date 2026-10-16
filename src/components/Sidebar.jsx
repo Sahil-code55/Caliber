@@ -1,14 +1,9 @@
 
 import { NavLink ,Link } from "react-router-dom";
-import {
-  LayoutDashboard, PlusCircle, BookOpen, ChartNoAxesColumn,
-  Settings as SettingsIcon, Code2, Search, Sun, Menu,
-  ClipboardList, CheckCircle2, Laptop, Pencil, Trash2,
-  ArrowRight, X, CircleHelp
-} from "lucide-react";
+import {LayoutDashboard,PlusCircle, BookOpen,ChartNoAxesColumn,Settings as SettingsIcon } from "lucide-react";
 
-import CaliberLogo from "../assets/"
-export default function Sidebar() {
+import CaliberLogo from "../assets/CaliberLogo.png";
+export default function Sidebar({ close }) {
 
   const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -26,7 +21,10 @@ export default function Sidebar() {
           <Code2 size={22} />
         </span>
         <span className="text-base font-bold">Interview Tracker</span> */}
-        <img className="h-10" src={CaliberLogo} alt="Interview Tracker" srcset="" />
+      <img className="h-11" src={CaliberLogo} alt="Caliber Logo" />
+      <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r
+       from-[#062E3B] to-[#3fafcb]">Caliber
+      </h1>
       </Link>
 
       <nav className="flex gap-2 overflow-x-auto md:flex-col">
@@ -37,10 +35,10 @@ export default function Sidebar() {
             end={to === "/"}
             onClick={close}
             className={({ isActive }) =>
-              `flex shrink-0 items-center gap-3 rounded-xl px-3 py-3 text-sm transition ${
-                isActive
-                  ? "bg-[#E0F0EF] font-semibold text-[#286B72]"
-                  : "text-[#64748B] hover:bg-[#F6F6F2]"
+              `flex shrink-0 items-center gap-3 rounded-xl px-3 py-3 text-sm transition
+              ${isActive
+              ? "bg-[#E0F0EF] font-semibold text-[#286B72]"
+              : "text-[#64748B] hover:bg-[#F6F6F2]"
               }`
             }
           >
