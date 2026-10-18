@@ -11,6 +11,10 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import StatCard from "./components/StatCard";
 import StatusBadge from "./components/StatusBadge";
+import QuestionTable from "./components/QuestionTable";
+import ChartCard from "./components/ChartCard";
+import Dashboard from "./pages/Dashboard";
+import Stats from "./pages/Stats";
 
 const initialQuestions = [
   { id: 1, title: "Two Sum", category: "DSA", difficulty: "Easy", status: "Completed", date: "12 Oct 2026" },
@@ -112,189 +116,189 @@ const navItems = [
 // }
 
 
-function QuestionTable({
-  questions,
-  showActions = false,
-  onEdit,
-  onDeleteClick,
-}) {
-  if (!questions.length) {
-    return (
-      <div className="rounded-xl border border-dashed border-[#CBD5D5] py-12 text-center">
-        <CircleHelp className="mx-auto mb-3 text-[#6FB3B8]" size={30} />
-        <p className="font-semibold">No questions found</p>
-        <p className="mt-1 text-sm text-[#64748B]">
-          Try another search or add a question.
-        </p>
-        <Link
-          to="/add"
-          className="mt-4 inline-block text-sm font-semibold text-[#388087]"
-        >
-          Add your first question
-        </Link>
-      </div>
-    );
-  }
+// function QuestionTable({
+//   questions,
+//   showActions = false,
+//   onEdit,
+//   onDeleteClick,
+// }) {
+//   if (!questions.length) {
+//     return (
+//       <div className="rounded-xl border border-dashed border-[#CBD5D5] py-12 text-center">
+//         <CircleHelp className="mx-auto mb-3 text-[#6FB3B8]" size={30} />
+//         <p className="font-semibold">No questions found</p>
+//         <p className="mt-1 text-sm text-[#64748B]">
+//           Try another search or add a question.
+//         </p>
+//         <Link
+//           to="/add"
+//           className="mt-4 inline-block text-sm font-semibold text-[#388087]"
+//         >
+//           Add your first question
+//         </Link>
+//       </div>
+//     );
+//   }
 
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[760px] text-left text-sm">
-        <thead className="bg-[#F6F8F7] text-xs text-[#64748B]">
-          <tr>
-            {[
-              "#",
-              "Question Title",
-              "Category",
-              "Difficulty",
-              "Status",
-              "Last Practiced",
-              ...(showActions ? ["Actions"] : []),
-            ].map((heading) => (
-              <th key={heading} className="px-4 py-3 font-semibold">
-                {heading}
-              </th>
-            ))}
-          </tr>
-        </thead>
+//   return (
+//     <div className="overflow-x-auto">
+//       <table className="w-full min-w-[760px] text-left text-sm">
+//         <thead className="bg-[#F6F8F7] text-xs text-[#64748B]">
+//           <tr>
+//             {[
+//               "#",
+//               "Question Title",
+//               "Category",
+//               "Difficulty",
+//               "Status",
+//               "Last Practiced",
+//               ...(showActions ? ["Actions"] : []),
+//             ].map((heading) => (
+//               <th key={heading} className="px-4 py-3 font-semibold">
+//                 {heading}
+//               </th>
+//             ))}
+//           </tr>
+//         </thead>
 
-        <tbody>
-          {questions.map((q, index) => (
-            <tr
-              key={q.id}
-              className="border-b border-[#E5EAEA] last:border-0 hover:bg-[#FAFCFB]"
-            >
-              <td className="px-4 py-3 text-[#64748B]">{index + 1}</td>
-              <td className="px-4 py-3 font-medium">{q.title}</td>
-              <td className="px-4 py-3 text-[#64748B]">{q.category}</td>
-              <td className="px-4 py-3">
-                <StatusBadge value={q.difficulty} />
-              </td>
-              <td className="px-4 py-3">
-                <StatusBadge value={q.status} />
-              </td>
-              <td className="px-4 py-3 text-[#64748B]">{q.date}</td>
+//         <tbody>
+//           {questions.map((q, index) => (
+//             <tr
+//               key={q.id}
+//               className="border-b border-[#E5EAEA] last:border-0 hover:bg-[#FAFCFB]"
+//             >
+//               <td className="px-4 py-3 text-[#64748B]">{index + 1}</td>
+//               <td className="px-4 py-3 font-medium">{q.title}</td>
+//               <td className="px-4 py-3 text-[#64748B]">{q.category}</td>
+//               <td className="px-4 py-3">
+//                 <StatusBadge value={q.difficulty} />
+//               </td>
+//               <td className="px-4 py-3">
+//                 <StatusBadge value={q.status} />
+//               </td>
+//               <td className="px-4 py-3 text-[#64748B]">{q.date}</td>
 
-              {showActions && (
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => onEdit?.(q)}
-                      aria-label={`Edit ${q.title}`}
-                      className="rounded-lg border border-[#E5EAEA] p-2 text-[#388087] hover:bg-[#E1F1EF]"
-                    >
-                      <Pencil size={16} />
-                    </button>
+//               {showActions && (
+//                 <td className="px-4 py-3">
+//                   <div className="flex items-center gap-2">
+//                     <button
+//                       type="button"
+//                       onClick={() => onEdit?.(q)}
+//                       aria-label={`Edit ${q.title}`}
+//                       className="rounded-lg border border-[#E5EAEA] p-2 text-[#388087] hover:bg-[#E1F1EF]"
+//                     >
+//                       <Pencil size={16} />
+//                     </button>
 
-                    <button
-                      type="button"
-                      onClick={() => onDeleteClick?.(q.id)}
-                      aria-label={`Delete ${q.title}`}
-                      className="rounded-lg border border-red-200 p-2 text-red-500 hover:bg-red-50"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+//                     <button
+//                       type="button"
+//                       onClick={() => onDeleteClick?.(q.id)}
+//                       aria-label={`Delete ${q.title}`}
+//                       className="rounded-lg border border-red-200 p-2 text-red-500 hover:bg-red-50"
+//                     >
+//                       <Trash2 size={16} />
+//                     </button>
+//                   </div>
+//                 </td>
+//               )}
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// }
 
 
-function ChartCard({ title, type = "status", questions }) {
-  const completed = questions.filter(q => q.status === "Completed").length;
-  const progress = questions.filter(q => q.status === "In Progress").length;
-  const pending = questions.filter(q => q.status === "Pending").length;
-  const categories = ["DSA", "Git", "Technical", "Other"];
-  const categoryColors = ["#388087", "#6FB3B8", "#8BC7E8", "#C7D0D8"];
-  const statusData = [
-    { label: "Completed", count: completed, color: "#388087" },
-    { label: "In Progress", count: progress, color: "#6FB3B8" },
-    { label: "Pending", count: pending, color: "#8BC7E8" },
-  ];
-  const data = type === "status"
-    ? statusData
-    : categories.map((label, i) => ({
-        label,
-        count: questions.filter(q => q.category === label).length,
-        color: categoryColors[i],
-      }));
-  const total = questions.length;
-  let cursor = 0;
-  const gradient = data.map(item => {
-    const start = cursor;
-    cursor += total ? (item.count / total) * 100 : 0;
-    return `${item.color} ${start}% ${cursor}%`;
-  }).join(", ");
+// function ChartCard({ title, type = "status", questions }) {
+//   const completed = questions.filter(q => q.status === "Completed").length;
+//   const progress = questions.filter(q => q.status === "In Progress").length;
+//   const pending = questions.filter(q => q.status === "Pending").length;
+//   const categories = ["DSA", "Git", "Technical", "Other"];
+//   const categoryColors = ["#388087", "#6FB3B8", "#8BC7E8", "#C7D0D8"];
+//   const statusData = [
+//     { label: "Completed", count: completed, color: "#388087" },
+//     { label: "In Progress", count: progress, color: "#6FB3B8" },
+//     { label: "Pending", count: pending, color: "#8BC7E8" },
+//   ];
+//   const data = type === "status"
+//     ? statusData
+//     : categories.map((label, i) => ({
+//         label,
+//         count: questions.filter(q => q.category === label).length,
+//         color: categoryColors[i],
+//       }));
+//   const total = questions.length;
+//   let cursor = 0;
+//   const gradient = data.map(item => {
+//     const start = cursor;
+//     cursor += total ? (item.count / total) * 100 : 0;
+//     return `${item.color} ${start}% ${cursor}%`;
+//   }).join(", ");
 
-  return (
-    <section className="rounded-2xl border border-[#E5EAEA] bg-white p-5">
-      <h2 className="mb-5 font-bold">{title}</h2>
-      {total === 0 ? (
-        <div className="grid min-h-48 place-items-center text-sm text-[#64748B]">Add questions to see your chart.</div>
-      ) : (
-        <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
-          <div
-            className="relative grid size-36 shrink-0 place-items-center rounded-full"
-            style={{ background: `conic-gradient(${gradient})` }}
-          >
-            <div className="grid size-20 place-items-center rounded-full bg-white text-center">
-              <div>
-                <p className="text-xl font-bold">{total}</p>
-                <p className="text-xs text-[#64748B]">Total</p>
-              </div>
-            </div>
-          </div>
-          <div className="w-full space-y-3">
-            {data.map(item => (
-              <div key={item.label} className="flex items-center justify-between gap-3 text-xs">
-                <span className="flex items-center gap-2">
-                  <span className="size-2.5 rounded-full" style={{ background: item.color }} />
-                  {item.label}
-                </span>
-                <span className="font-semibold">{item.count} ({Math.round(item.count / total * 100)}%)</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </section>
-  );
-}
+//   return (
+//     <section className="rounded-2xl border border-[#E5EAEA] bg-white p-5">
+//       <h2 className="mb-5 font-bold">{title}</h2>
+//       {total === 0 ? (
+//         <div className="grid min-h-48 place-items-center text-sm text-[#64748B]">Add questions to see your chart.</div>
+//       ) : (
+//         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+//           <div
+//             className="relative grid size-36 shrink-0 place-items-center rounded-full"
+//             style={{ background: `conic-gradient(${gradient})` }}
+//           >
+//             <div className="grid size-20 place-items-center rounded-full bg-white text-center">
+//               <div>
+//                 <p className="text-xl font-bold">{total}</p>
+//                 <p className="text-xs text-[#64748B]">Total</p>
+//               </div>
+//             </div>
+//           </div>
+//           <div className="w-full space-y-3">
+//             {data.map(item => (
+//               <div key={item.label} className="flex items-center justify-between gap-3 text-xs">
+//                 <span className="flex items-center gap-2">
+//                   <span className="size-2.5 rounded-full" style={{ background: item.color }} />
+//                   {item.label}
+//                 </span>
+//                 <span className="font-semibold">{item.count} ({Math.round(item.count / total * 100)}%)</span>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       )}
+//     </section>
+//   );
+// }
 
-function Dashboard({ questions, search, setSearch }) {
-  const completed = questions.filter(q => q.status === "Completed").length;
-  const completedDSA = questions.filter(q => q.category === "DSA" && q.status === "Completed").length;
-  const codingCount = questions.filter(q => q.category === "Machine Coding").length;
+// function Dashboard({ questions, search, setSearch }) {
+//   const completed = questions.filter(q => q.status === "Completed").length;
+//   const completedDSA = questions.filter(q => q.category === "DSA" && q.status === "Completed").length;
+//   const codingCount = questions.filter(q => q.category === "Machine Coding").length;
 
-  return (
-    <>
-      <Header title="Track your interview preparation" subtitle="Stay consistent and improve every day." search={search} setSearch={setSearch} />
-      <div className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard title="Total Questions" value={questions.length} icon={ClipboardList} color="bg-[#E1F1EF] text-[#388087]" />
-        <StatCard title="Completed" value={completed} note={`${questions.length ? Math.round(completed / questions.length * 100) : 0}% of total`} icon={CheckCircle2} color="bg-[#DDF5E5] text-[#248567]" />
-        <StatCard title="Completed DSA" value={completedDSA} note={`${questions.filter(q => q.category === "DSA").length ? Math.round(completedDSA / questions.filter(q => q.category === "DSA").length * 100) : 0}% of DSA`} icon={Code2} color="bg-[#E5F5EB] text-[#248567]" />
-        <StatCard title="Machine Coding" value={codingCount ? "In Progress" : "Not Started"} note={`${codingCount} tracked questions`} icon={Laptop} color="bg-[#E1EFFB] text-[#347FB3]" />
-      </div>
-      <div className="mb-5 grid gap-4 xl:grid-cols-2">
-        <ChartCard title="Question Status" questions={questions} />
-        <ChartCard title="Questions by Category" type="category" questions={questions} />
-      </div>
-      <section className="rounded-2xl border border-[#E5EAEA] bg-white p-5">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <h2 className="font-bold">Recent Questions</h2>
-          <Link to="/questions" className="flex items-center gap-1 text-sm font-semibold text-[#388087]">View All <ArrowRight size={16} /></Link>
-        </div>
-        <QuestionTable questions={questions.slice(0, 5)} />
-      </section>
-    </>
-  );
-}
+//   return (
+//     <>
+//       <Header title="Track your interview preparation" subtitle="Stay consistent and improve every day." search={search} setSearch={setSearch} />
+//       <div className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+//         <StatCard title="Total Questions" value={questions.length} icon={ClipboardList} color="bg-[#E1F1EF] text-[#388087]" />
+//         <StatCard title="Completed" value={completed} note={`${questions.length ? Math.round(completed / questions.length * 100) : 0}% of total`} icon={CheckCircle2} color="bg-[#DDF5E5] text-[#248567]" />
+//         <StatCard title="Completed DSA" value={completedDSA} note={`${questions.filter(q => q.category === "DSA").length ? Math.round(completedDSA / questions.filter(q => q.category === "DSA").length * 100) : 0}% of DSA`} icon={Code2} color="bg-[#E5F5EB] text-[#248567]" />
+//         <StatCard title="Machine Coding" value={codingCount ? "In Progress" : "Not Started"} note={`${codingCount} tracked questions`} icon={Laptop} color="bg-[#E1EFFB] text-[#347FB3]" />
+//       </div>
+//       <div className="mb-5 grid gap-4 xl:grid-cols-2">
+//         <ChartCard title="Question Status" questions={questions} />
+//         <ChartCard title="Questions by Category" type="category" questions={questions} />
+//       </div>
+//       <section className="rounded-2xl border border-[#E5EAEA] bg-white p-5">
+//         <div className="mb-4 flex items-center justify-between gap-3">
+//           <h2 className="font-bold">Recent Questions</h2>
+//           <Link to="/questions" className="flex items-center gap-1 text-sm font-semibold text-[#388087]">View All <ArrowRight size={16} /></Link>
+//         </div>
+//         <QuestionTable questions={questions.slice(0, 5)} />
+//       </section>
+//     </>
+//   );
+// }
 
 function AddQuestion({ onAdd }) {
   const [form, setForm] = useState({ title: "", category: "DSA", difficulty: "Easy", status: "Pending", notes: "" });
@@ -401,34 +405,34 @@ function QuestionsPage({ questions, onDelete, search, setSearch }) {
   );
 }
 
-function Stats({ questions }) {
-  const completed = questions.filter(q => q.status === "Completed").length;
-  const dsa = questions.filter(q => q.category === "DSA").length;
-  const dsaDone = questions.filter(q => q.category === "DSA" && q.status === "Completed").length;
+// function Stats({ questions }) {
+//   const completed = questions.filter(q => q.status === "Completed").length;
+//   const dsa = questions.filter(q => q.category === "DSA").length;
+//   const dsaDone = questions.filter(q => q.category === "DSA" && q.status === "Completed").length;
 
-  return (
-    <>
-      <Header title="Statistics" subtitle="Understand your interview preparation progress." />
-      <div className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard title="Total Questions" value={questions.length} icon={ClipboardList} color="bg-[#E1F1EF] text-[#388087]" />
-        <StatCard title="Completed" value={completed} icon={CheckCircle2} color="bg-[#DDF5E5] text-[#248567]" />
-        <StatCard title="In Progress" value={questions.filter(q => q.status === "In Progress").length} icon={BookOpen} color="bg-[#FFF0C2] text-[#966400]" />
-        <StatCard title="Pending" value={questions.filter(q => q.status === "Pending").length} icon={CircleHelp} color="bg-[#E1EFFB] text-[#347FB3]" />
-      </div>
-      <div className="grid gap-5 xl:grid-cols-2">
-        <ChartCard title="Question Status" questions={questions} />
-        <ChartCard title="Questions by Category" type="category" questions={questions} />
-        <section className="rounded-2xl border border-[#E5EAEA] bg-white p-5 xl:col-span-2">
-          <h2 className="font-bold">DSA Progress</h2>
-          <div className="mt-4 flex justify-between text-sm"><span>{dsaDone} of {dsa} completed</span><span>{dsa ? Math.round(dsaDone / dsa * 100) : 0}%</span></div>
-          <div className="mt-3 h-3 overflow-hidden rounded-full bg-[#E5EAEA]">
-            <div className="h-full rounded-full bg-[#388087]" style={{ width: `${dsa ? dsaDone / dsa * 100 : 0}%` }} />
-          </div>
-        </section>
-      </div>
-    </>
-  );
-}
+//   return (
+//     <>
+//       <Header title="Statistics" subtitle="Understand your interview preparation progress." />
+//       <div className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+//         <StatCard title="Total Questions" value={questions.length} icon={ClipboardList} color="bg-[#E1F1EF] text-[#388087]" />
+//         <StatCard title="Completed" value={completed} icon={CheckCircle2} color="bg-[#DDF5E5] text-[#248567]" />
+//         <StatCard title="In Progress" value={questions.filter(q => q.status === "In Progress").length} icon={BookOpen} color="bg-[#FFF0C2] text-[#966400]" />
+//         <StatCard title="Pending" value={questions.filter(q => q.status === "Pending").length} icon={CircleHelp} color="bg-[#E1EFFB] text-[#347FB3]" />
+//       </div>
+//       <div className="grid gap-5 xl:grid-cols-2">
+//         <ChartCard title="Question Status" questions={questions} />
+//         <ChartCard title="Questions by Category" type="category" questions={questions} />
+//         <section className="rounded-2xl border border-[#E5EAEA] bg-white p-5 xl:col-span-2">
+//           <h2 className="font-bold">DSA Progress</h2>
+//           <div className="mt-4 flex justify-between text-sm"><span>{dsaDone} of {dsa} completed</span><span>{dsa ? Math.round(dsaDone / dsa * 100) : 0}%</span></div>
+//           <div className="mt-3 h-3 overflow-hidden rounded-full bg-[#E5EAEA]">
+//             <div className="h-full rounded-full bg-[#388087]" style={{ width: `${dsa ? dsaDone / dsa * 100 : 0}%` }} />
+//           </div>
+//         </section>
+//       </div>
+//     </>
+//   );
+// }
 
 function Settings({ onClear }) {
   const [confirm, setConfirm] = useState(false);
