@@ -69,7 +69,12 @@ export default function Dashboard({ questions, search, setSearch }) {
         <div className="mb-4 flex items-center justify-between gap-3">
           <h2 className="font-bold">Recent Questions</h2>
 
-          <Link to="/questions" className="flex items-center gap-1 text-sm font-semibold text-[#388087]">View All <ArrowRight size={16} /></Link>
+          <Link 
+          to="/questions" 
+          className="flex items-center gap-1 text-sm font-semibold text-[#388087]">View All 
+          <ArrowRight size={16} />
+          </Link>
+          
         </div>
         
         <QuestionTable questions={questions.slice(0, 5)} />
