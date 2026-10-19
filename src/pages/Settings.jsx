@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import Header from "../components/Header";
+import { useQuestions } from "../Context/QuestionsContext";
 
 
-export default function Settings({ onClear }) {
+export default function Settings() {
   const [confirm, setConfirm] = useState(false);
+  const { clearQuestions } = useQuestions();
   return (
     <>
       <Header title="Settings" subtitle="Manage your interview tracker data." />
@@ -29,7 +31,7 @@ export default function Settings({ onClear }) {
             <p className="mt-2 text-sm text-[#64748B]">This cannot be undone.</p>
             <div className="mt-5 flex justify-end gap-3">
               <button onClick={() => setConfirm(false)} className="rounded-xl border border-[#E5EAEA] px-4 py-2 text-sm">Cancel</button>
-              <button onClick={() => { onClear(); setConfirm(false); }} className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-white">Clear Data</button>
+              <button onClick={() => { clearQuestions(); setConfirm(false); }} className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-white">Clear Data</button>
             </div>
           </div>
         </div>

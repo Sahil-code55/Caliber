@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Header from "../components/Header";
+import { useQuestions } from "../Context/QuestionsContext";
 
 
 
-
-export default function AddQuestion({ onAdd }) {
+export default function AddQuestion() {
+  const { addQuestion } = useQuestions();
   const [form, setForm] = useState({ title: "", category: "DSA", difficulty: "Easy", status: "Pending", notes: "" });
   const [error, setError] = useState("");
 
@@ -14,11 +15,11 @@ export default function AddQuestion({ onAdd }) {
       setError("Please enter a question title.");
       return;
     }
-    onAdd({ ...form, title: form.title.trim() });
+    addQuestion({ ...form, title: form.title.trim() });
     setForm({ title: "", category: "DSA", difficulty: "Easy", status: "Pending", notes: "" });
     setError("");
   }
-
+  
   const fieldClass = "mt-2 w-full rounded-xl border border-[#E5EAEA] bg-white px-3 py-3 text-sm outline-none focus:border-[#388087]";
 
   return (

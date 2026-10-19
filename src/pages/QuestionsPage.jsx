@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Search, SlidersHorizontal } from "lucide-react";
 import Header from "../components/Header";
 import QuestionTable from "../components/QuestionTable";
+import {  useQuestions } from "../Context/QuestionsContext";
 
-export default function QuestionsPage({ questions, onDelete, search, setSearch }) {
+export default function QuestionsPage({  search, setSearch }) {
   const [category, setCategory] = useState("All");
   const [difficulty, setDifficulty] = useState("All");
   const [status, setStatus] = useState("All");
   const [deleteId, setDeleteId] = useState(null);
+
+const { questions, deleteQuestion } = useQuestions();
+
 
   const filtered = questions.filter(q =>
     q.title.toLowerCase().includes(search.toLowerCase()) &&
@@ -48,8 +52,9 @@ export default function QuestionsPage({ questions, onDelete, search, setSearch }
             <h2 className="text-lg font-bold">Delete this question?</h2>
             <p className="mt-2 text-sm text-[#64748B]">This removes the question from the current app state.</p>
             <div className="mt-5 flex justify-end gap-3">
-              <button onClick={() => setDeleteId(null)} className="rounded-xl border border-[#E5EAEA] px-4 py-2 text-sm">Cancel</button>
-              <button onClick={() => { onDelete(deleteId); setDeleteId(null); }} className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-white">Delete</button>
+              <button onClick={() => setDeleteId(null)}
+               className="rounded-xl border border-[#E5EAEA] px-4 py-2 text-sm">Cancel</button>
+              <button onClick={() => { deleteQuestion(deleteId); setDeleteId(null); }} className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-white">Delete</button>
             </div>
           </div>
         </div>

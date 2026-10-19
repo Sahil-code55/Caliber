@@ -8,28 +8,16 @@ import Stats from "./pages/Stats";
 import AddQuestion from "./pages/AddQuestion";
 import QuestionsPage from "./pages/QuestionsPage";
 import Settings from "./pages/Settings";
+import { useQuestions } from "./Context/QuestionsContext";
 
-const initialQuestions = [
-  { id: 1, title: "Two Sum", category: "DSA", difficulty: "Easy", status: "Completed", date: "12 Oct 2026" },
-  { id: 2, title: "Reverse a String", category: "DSA", difficulty: "Easy", status: "In Progress", date: "10 Oct 2026" },
-  { id: 3, title: "Valid Parentheses", category: "DSA", difficulty: "Medium", status: "Pending", date: "—" },
-  { id: 4, title: "Merge Two Sorted Lists", category: "DSA", difficulty: "Hard", status: "Pending", date: "—" },
-  { id: 5, title: "Explain Git Workflow", category: "Git", difficulty: "Easy", status: "In Progress", date: "08 Oct 2026" },
-];
+
 {/* <Sidebar close={() => setMobileNav(false)} /> */}
 
 export default function App() {
-  const [questions, setQuestions] = useState(initialQuestions);
+
+  const { questions, setQuestions, addQuestion, deleteQuestion } = useQuestions();
   const [search, setSearch] = useState("");
   const [mobileNav, setMobileNav] = useState(false);
-
-  function addQuestion(question) {
-    setQuestions(prev => [{ ...question, id: Date.now(), date: "—" }, ...prev]);
-  }
-
-  function deleteQuestion(id) {
-    setQuestions(prev => prev.filter(q => q.id !== id));
-  }
 
   return (
     <div className="h-screen bg-[#F6F6F2] md:overflow-hidden md:flex">
@@ -61,14 +49,11 @@ export default function App() {
             <Route
              path="/add" 
             element={<AddQuestion 
-            onAdd={addQuestion} />}
-             />
+            />} />
 
             <Route
             path="/questions"
             element={<QuestionsPage 
-            questions={questions} 
-            onDelete={deleteQuestion} 
             search={search} 
             setSearch={setSearch} />}
              />
@@ -82,8 +67,7 @@ export default function App() {
 
             <Route 
             path="/settings"
-            element={<Settings
-            onClear={() => setQuestions([])} />}
+            element={<Settings />}
             />
 
             <Route 
