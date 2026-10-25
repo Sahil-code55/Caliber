@@ -11,11 +11,11 @@ import Settings from "./pages/Settings";
 import { useQuestions } from "./Context/QuestionsContext";
 
 
-{/* <Sidebar close={() => setMobileNav(false)} /> */}
+ <Sidebar close={() => setMobileNav(false)} /> 
 
 export default function App() {
 
-  const { questions, setQuestions, addQuestion, deleteQuestion } = useQuestions();
+  const { questions } = useQuestions();
   const [search, setSearch] = useState("");
   const [mobileNav, setMobileNav] = useState(false);
 

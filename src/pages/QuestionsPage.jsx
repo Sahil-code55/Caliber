@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
 import Header from "../components/Header";
 import QuestionTable from "../components/QuestionTable";
 import {  useQuestions } from "../Context/QuestionsContext";
+import { useNavigate } from "react-router-dom";
 
 export default function QuestionsPage({  search, setSearch }) {
   const [category, setCategory] = useState("All");
@@ -12,6 +12,7 @@ export default function QuestionsPage({  search, setSearch }) {
 
 const { questions, deleteQuestion } = useQuestions();
 
+const navigate = useNavigate();
 
   const filtered = questions.filter(q =>
     q.title.toLowerCase().includes(search.toLowerCase()) &&
@@ -38,9 +39,9 @@ const { questions, deleteQuestion } = useQuestions();
         <QuestionTable
           questions={filtered}
          showActions
-         onEdit={(question) => {
-        alert(`Edit functionality will be implemented next: ${question.title}`);
-        }}
+        onEdit={(question) => {
+      navigate("/add", { state: { question } });
+       }}
         onDeleteClick={setDeleteId}
          />
         <p className="mt-4 text-xs text-[#64748B]">Showing {filtered.length} of {questions.length} questions</p>

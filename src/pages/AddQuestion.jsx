@@ -1,13 +1,26 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { useQuestions } from "../Context/QuestionsContext";
-
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function AddQuestion() {
-  const { addQuestion } = useQuestions();
-  const [form, setForm] = useState({ title: "", category: "DSA", difficulty: "Easy", status: "Pending", notes: "" });
-  const [error, setError] = useState("");
+
+  const location = useLocation();
+const navigate = useNavigate();
+
+const questionToEdit = location.state?.question;
+const isEditing = Boolean(questionToEdit);
+const { addQuestion, updateQuestion } = useQuestions();
+
+const [form, setForm] = useState(() => ({
+  title: questionToEdit?.title ?? "",
+  category: questionToEdit?.category ?? "DSA",
+  difficulty: questionToEdit?.difficulty ?? "Easy",
+  status: questionToEdit?.status ?? "Pending",
+  notes: questionToEdit?.notes ?? "",
+}));
+
+const [error, setError] = useState("");
 
   function submit(e) {
     e.preventDefault();
@@ -15,7 +28,19 @@ export default function AddQuestion() {
       setError("Please enter a question title.");
       return;
     }
-    addQuestion({ ...form, title: form.title.trim() });
+    const questionData = {
+  ...form,
+  title: form.title.trim(),
+  };
+
+  if(isEditing) {
+  updateQuestion(questionToEdit.id, questionData);
+  } else {
+  addQuestion(questionData);
+  }
+
+  setError("");
+  navigate("/questions");
     setForm({ title: "", category: "DSA", difficulty: "Easy", status: "Pending", notes: "" });
     setError("");
   }
@@ -24,7 +49,14 @@ export default function AddQuestion() {
 
   return (
     <>
-      <Header title="Add New Question" subtitle="Save a question to your interview tracker." />
+    <Header
+    title={isEditing ? "Edit Question" : "Add New Question"}
+    subtitle={
+    isEditing
+      ? "Update your interview question."
+      : "Save a question to your interview tracker."
+    }
+    />
 
       <form onSubmit={submit} className="max-w-3xl rounded-2xl border border-[#E5EAEA] bg-white p-5 sm:p-7">
 
@@ -65,8 +97,25 @@ export default function AddQuestion() {
         
         {error && <p role="alert" className="mt-3 text-sm text-red-600">{error}</p>}
         <div className="mt-6 flex flex-wrap justify-end gap-3">
-          <button type="button" onClick={() => { setForm({ title: "", category: "DSA", difficulty: "Easy", status: "Pending", notes: "" }); setError(""); }} className="rounded-xl border border-[#E5EAEA] px-5 py-3 text-sm font-medium">Reset</button>
-          <button className="rounded-xl bg-[#388087] px-5 py-3 text-sm font-semibold text-white hover:bg-[#286B72]">Save Question</button>
+
+        <button 
+        type="button"
+        onClick={() => {
+        setForm({
+        title: questionToEdit?.title ?? "",
+        category: questionToEdit?.category ?? "DSA",
+        difficulty: questionToEdit?.difficulty ?? "Easy",
+        status: questionToEdit?.status ?? "Pending",
+        notes: questionToEdit?.notes ?? "",
+        });
+        setError("");
+        }} 
+        className="rounded-xl border border-[#E5EAEA] px-5 py-3 text-sm font-medium">Reset</button>
+
+        <button 
+        className="rounded-xl bg-[#388087] px-5 py-3 text-sm font-semibold text-white hover:bg-[#286B72]">
+        {isEditing ? "Save Changes" : "Save Question"}
+        </button>
         </div>
       </form>
     </>

@@ -1,56 +1,23 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { loadQuestions, saveQuestions } from "../utils/storage";
+import QuestionsContext from "./questionsContextObject";
 
-export const QuestionsContext = createContext(null);
-
-const initialQuestions = [
-  {
-    id: 1,
-    title: "Two Sum",
-    category: "DSA",
-    difficulty: "Easy",
-    status: "Completed",
-    date: "12 Oct 2026",
-  },
-  {
-    id: 2,
-    title: "Reverse a String",
-    category: "DSA",
-    difficulty: "Easy",
-    status: "In Progress",
-    date: "10 Oct 2026",
-  },
-  {
-    id: 3,
-    title: "Valid Parentheses",
-    category: "DSA",
-    difficulty: "Medium",
-    status: "Pending",
-    date: "—",
-  },
-  {
-    id: 4,
-    title: "Merge Two Sorted Lists",
-    category: "DSA",
-    difficulty: "Hard",
-    status: "Pending",
-    date: "—",
-  },
-  {
-    id: 5,
-    title: "Explain Git Workflow",
-    category: "Git",
-    difficulty: "Easy",
-    status: "In Progress",
-    date: "08 Oct 2026",
-  },
-];
 
 export function QuestionsProvider({ children }) {
-const [questions, setQuestions] = useState(initialQuestions);
+
+const [questions, setQuestions] = useState(loadQuestions);
+
+useEffect(() => {
+  saveQuestions(questions);
+}, [questions]);
 
 function addQuestion(question) {
+  if (!question.title?.trim()) {
+    throw new Error("Question title is required.");
+  }
+
   setQuestions((prev) => [
-    { ...question, id: Date.now(), date: "—" },
+    { ...question, title: question.title.trim(), id: Date.now(), date: "—" },
     ...prev,
   ]);
 }
@@ -63,8 +30,18 @@ function clearQuestions() {
   setQuestions([]);
 }
 
+function updateQuestion(id, updatedData) {
+  setQuestions((prev) =>
+    prev.map((question) =>
+      question.id === id
+        ? { ...question, ...updatedData, id }
+        : question
+    )
+  );
+}
+
 return (
-    <QuestionsContext.Provider value={{ questions, setQuestions, addQuestion, deleteQuestion, clearQuestions }}>
+    <QuestionsContext.Provider value={{ questions, setQuestions, addQuestion, deleteQuestion, clearQuestions, updateQuestion }}>
       {children}
     </QuestionsContext.Provider>
 );}
